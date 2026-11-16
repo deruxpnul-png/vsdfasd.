@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Prime Panel</title>
+    <!-- Подключаем официальный Telegram UI Kit -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script type="module" src="https://unpkg.com/@telegram-apps/telegram-ui/dist/telegram-ui/telegram-ui.esm.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@telegram-apps/telegram-ui/dist/telegram-ui/telegram-ui.css">
+    <style>
+        body {
+            background-color: var(--tg-theme-secondary-bg-color, #17212b);
+            color: var(--tg-theme-text-color, #ffffff);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        /* Стили для карточек и текста */
+        .header-card {
+            background-color: var(--tg-theme-bg-color, #232e3c);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .header-card .id-row {
+            color: #7f91a4;
+            font-size: 13px;
+        }
+        .header-card .status-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .header-card .status-icon {
+            background-color: #4caf50;
+            color: white;
+            border-radius: 4px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .description {
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 8px 4px;
+            color: var(--tg-theme-text-color, #ffffff);
+        }
+        .description span {
+            color: #7f91a4;
+        }
+
+        /* Кастомная кнопка (зеленая) */
+        .btn-custom {
+            background-color: rgba(56, 138, 76, 0.2); /* Полупрозрачный зеленый */
+            color: #68c780;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+        .btn-custom:active {
+            background-color: rgba(56, 138, 76, 0.3);
+        }
+
+        /* Сетка для кнопок */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        /* Общие стили для кнопок в стиле Telegram UI */
+        .tg-btn {
+            background-color: var(--tg-theme-bg-color, #232e3c);
+            color: var(--tg-theme-text-color, #ffffff);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .tg-btn:active {
+            opacity: 0.8;
+        }
+        .tg-btn.full-width {
+            grid-column: span 2;
+        }
+        
+        /* Стрелочки в правом углу (для URL кнопок) */
+        .arrow-icon {
+            font-size: 12px;
+            color: #7f91a4;
+            margin-left: auto;
+            padding-right: 8px;
+        }
+        
+        /* Нижний ряд маленьких кнопок */
+        .bottom-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .bottom-row .tg-btn {
+            font-size: 13px;
+            padding: 10px 4px;
+            color: #64b5f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Верхняя карточка с ID и статусом -->
+    <div class="header-card">
+        <div class="id-row">👥 ID: 8992668198</div>
+        <div class="status-row">
+            <div class="status-icon">✔</div>
+            <span>Подписка: профиль ещё не создан</span>
+        </div>
+    </div>
+
+    <!-- Описание -->
+    <div class="description">
+        Попробуйте Prime — 7 дней бесплатно.<br>
+        <span>Затем — Promo с Playerok Автовыдачей.</span>
+    </div>
+
+    <!-- Кнопка Prime -->
+    <button class="btn-custom" onclick="sendData('try_prime')">
+        ✨ Попробовать Prime
+    </button>
+
+    <!-- Сетка кнопок -->
+    <div class="btn-grid">
+        <button class="tg-btn" onclick="sendData('connect_profile')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            Подключить профиль
+        </button>
+        <button class="tg-btn" onclick="sendData('tariffs')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            Тарифы и покупка
+        </button>
+        
+        <button class="tg-btn full-width" onclick="sendData('info')">
+            📊 Информация
+        </button>
+        
+        <button class="tg-btn full-width" onclick="openLink('https://t.me/telegram')">
+            <span style="display: flex; align-items: center; gap: 8px;">📂 Открыть панель</span>
+            <span class="arrow-icon">↗</span>
+        </button>
+    </div>
+
+    <!-- Нижние кнопки -->
+    <div class="bottom-row">
+        <button class="tg-btn" onclick="openLink('https://t.me/telegram')">🛡 Поддержка ↗</button>
+        <button class="tg-btn" onclick="openLink('https://t.me/telegram')">🚀 PL Panel ↗</button>
+        <button class="tg-btn" onclick="openLink('https://t.me/telegram')">↩ Канал ↗</button>
+    </div>
+
+    <script>
+        // Инициализация Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Развернуть на весь экран
+        tg.ready();
+        
+        // Установить цвет хедера в цвет фона
+        tg.setHeaderColor('secondary_bg_color');
+        tg.setBackgroundColor('secondary_bg_color');
+
+        // Функция для отправки данных боту (Callback)
+        function sendData(action) {
+            tg.sendData(JSON.stringify({ action: action }));
+            tg.close(); // Закрыть окно после нажатия
+        }
+
+        // Функция для открытия ссылок
+        function openLink(url) {
+            tg.openLink(url);
+        }
+    </script>
+</body>
+</html>
