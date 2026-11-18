@@ -1,0 +1,10 @@
+!doctype html
+html
+headmeta charset=utf-8titleHapptitlehead
+body
+script
+  const u = new URLSearchParams(location.search).get('url');
+  if (u) location.href = 'happadd' + u;
+script
+body
+html
